@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>My topics</title>
+</head>
+<body>
+    <h1>My topics</h1>
+
+    <p>
+        <a href="{% url 'topic_create' %}">Add new topic</a>
+    </p>
+
+    <ul>
+        {% for topic in topics %}
+            <li>{{ topic.name }}</li>
+        {% empty %}
+            <li>No topics yet.</li>
+        {% endfor %}
+    </ul>
+
+    <p>
+        <a href="{% url 'home' %}">Back home</a>
+    </p>
+</body>
+</html>

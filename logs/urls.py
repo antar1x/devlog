@@ -1,8 +1,8 @@
 from django.urls import path
 
-from logs import views
+from logs.views import TopicCreateView, TopicListView
 
 urlpatterns = [
-    path('topics/', views.topic_list, name='topic_list'),
-    path('topics/create/', views.topic_create, name='topic_create'),
+    path('topics/', TopicListView.as_view(), name='topic_list'),
+    path('topics/create/', TopicCreateView.as_view(), name='topic_create'),
 ]

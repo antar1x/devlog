@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add topic</title>
+</head>
+<body>
+    <h1>Add topic</h1>
+
+    <form method="post">
+        {% csrf_token %}
+
+        {{ form.as_p }}
+
+        <button type="submit">Save</button>
+    </form>
+
+    <p>
+        <a href="{% url 'topic_list' %}">Back to topics</a>
+    </p>
+</body>
+</html>
