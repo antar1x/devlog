@@ -1,0 +1,30 @@
+<h1>My study sessions</h1>
+
+<p>
+    <a href="{% url 'session_create' %}">Add session</a>
+</p>
+
+<ul>
+    {% for session in sessions %}
+        <li>
+            {{ session.date }} —
+            {{ session.topic.name }} —
+            {{ session.duration_minutes }} min —
+            difficulty {{ session.difficulty }}/5
+
+            {% if session.notes %}
+                <br>
+                {{ session.notes }}
+            {% endif %}
+            <br>
+                <a href="{% url 'session_edit' session.pk %}">Edit</a>
+                <a href="{% url 'session_delete' session.pk %}">Delete</a>
+        </li>
+    {% empty %}
+        <li>No sessions yet.</li>
+    {% endfor %}
+</ul>
+
+<p>
+    <a href="{% url 'home' %}">Back home</a>
+</p>
