@@ -1,6 +1,7 @@
 from django import forms
+from django.http import request
 
-from logs.models import Topic, LogSession
+from logs.models import Topic, LogSession, Goal
 
 
 class TopicForm(forms.ModelForm):
@@ -15,4 +16,12 @@ class LogSessionForm(forms.ModelForm):
         widgets = {
             'date': forms.DateInput(attrs={'type': 'date'}),
             'notes': forms.Textarea(attrs={'rows': 4}),
+        }
+
+class GoalForm(forms.ModelForm):
+    class Meta:
+        model = Goal
+        fields = ('title', 'target_hours', 'topic', 'deadline' )
+        widgets = {
+            'deadline': forms.DateInput(attrs={'type': 'date'}),
         }

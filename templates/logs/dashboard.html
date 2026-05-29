@@ -5,6 +5,20 @@
     <title>Title</title>
 </head>
 <body>
-
+    <h1>Your statistic:</h1>
+    <h3>Total sessions: {{ total_sessions }}</h3>
+    <h3>Total minutes: {{ total_minutes }}</h3>
+    <h3>Total hours: {{ total_hours }}</h3>
+    <h3>Total topics: {{ total_topics }}</h3>
+    <h3>Last 5 sessions:</h3>
+    {% for session in last_5_sessions %}
+    {{ session.topic }} - {{ session.date }}
+    {% empty %}
+        <h4>No sessions yet</h4>
+    {% endfor %}
+    <h3>Minutes by topic</h3>
+    {% for stat in statistic %}
+    {{ stat.topic__name }} - {{ stat.total_minutes }}
+    {% endfor %}
 </body>
 </html>

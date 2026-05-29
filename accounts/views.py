@@ -1,10 +1,11 @@
 from django.contrib.auth import login
 from django.contrib.auth.forms import AuthenticationForm
-from django.contrib.auth.views import LoginView, LogoutView
+from django.contrib.auth.views import LoginView
 from django.shortcuts import render, redirect
 from django.views.generic import CreateView, TemplateView
 
 from accounts.forms import RegisterForm
+
 
 class CustomLoginView(LoginView):
     def get(self, request):

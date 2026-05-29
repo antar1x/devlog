@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <h1>Goal list</h1>
+    {% for goal in goals %}
+        <h4>Topic: {{ goal.topic }}</h4>
+        <h4>Deadline: {{ goal.deadline }}</h4>
+        <p>Progress: {{ goal.current_minutes }} / {{ goal.target_minutes }} minutes</p>
+<p>{{ goal.progress_percent }}%</p>
+
+{% if goal.is_completed_now %}
+    <strong>Completed</strong>
+{% else %}
+    <strong>In progress</strong>
+{% endif %}
+        <h4>Your target hours: {{ goal.target_hours }}</h4>
+        <h4>Title: {{ goal.title }}</h4>
+        <a href="{% url 'goal_create' %}">Create goal</a>
+        <a href="{% url 'goal_edit' goal.pk %}">Edit goal</a>
+        <a href="{% url 'goal_delete' goal.pk %}">Delete goal</a>
+    {% empty %}
+        <h3>No goals yet</h3>
+    {% endfor %}
+
+</body>
+</html>
