@@ -18,7 +18,8 @@
     {% endfor %}
     <h3>Minutes by topic</h3>
     {% for stat in statistic %}
-    {{ stat.topic__name }} - {{ stat.total_minutes }}
+    {{ stat.topic__name }} - {{ stat.total_minutes }}<br>
     {% endfor %}
+<a href="{% url 'home' %}">Back home</a>
 </body>
 </html>

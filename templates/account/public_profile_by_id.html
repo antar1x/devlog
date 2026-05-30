@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>{{ profile.user.username }}</h1>
+
+<p>{{ profile.bio }}</p>
+
+<h3>Total topics: {{ total_topics }}</h3>
+<h3>Total minutes: {{ total_minutes }}</h3>
+<h3>Total hours: {{ total_hours }}</h3>
+
+<h3>Recent sessions</h3>
+<ul>
+    {% for session in last_5_sessions %}
+        <li>
+            {{ session.date }} -
+            {{ session.topic.name }} -
+            {{ session.duration_minutes }} min
+        </li>
+    {% empty %}
+        <li>No sessions yet.</li>
+    {% endfor %}
+</ul>
+
+<h3>Goals</h3>
+<ul>
+    {% for goal in goals %}
+        <li>
+            {{ goal.title }} -
+            {{ goal.topic.name }} -
+            {{ goal.target_hours }} hours
+        </li>
+    {% empty %}
+        <li>No goals yet.</li>
+    {% endfor %}
+</ul>
+</body>
+</html>

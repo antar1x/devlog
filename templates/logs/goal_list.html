@@ -19,12 +19,12 @@
 {% endif %}
         <h4>Your target hours: {{ goal.target_hours }}</h4>
         <h4>Title: {{ goal.title }}</h4>
-        <a href="{% url 'goal_create' %}">Create goal</a>
         <a href="{% url 'goal_edit' goal.pk %}">Edit goal</a>
         <a href="{% url 'goal_delete' goal.pk %}">Delete goal</a>
     {% empty %}
         <h3>No goals yet</h3>
     {% endfor %}
-
+    <a href="{% url 'goal_create' %}">Create goal</a>
+<a href="{% url 'home' %}">Back home</a>
 </body>
 </html>

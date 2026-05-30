@@ -1,5 +1,4 @@
 from django import forms
-from django.http import request
 
 from logs.models import Topic, LogSession, Goal
 

@@ -7,9 +7,9 @@
 <ul>
     {% for session in sessions %}
         <li>
-            {{ session.date }} —
-            {{ session.topic.name }} —
-            {{ session.duration_minutes }} min —
+            {{ session.date }} -
+            {{ session.topic.name }} -
+            {{ session.duration_minutes }} min -
             difficulty {{ session.difficulty }}/5
 
             {% if session.notes %}
