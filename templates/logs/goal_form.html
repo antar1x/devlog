@@ -1,11 +1,23 @@
 {% extends 'base.html' %}
-{% block content %}
-<h3>Create new Goal!</h3>
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
 
-    <button type="submit">Save</button>
-</form>
-<a href="{% url 'home' %}">Back home</a>
+{% block title %}DevLog - Goal{% endblock %}
+
+{% block content %}
+<section class="page-head">
+    <div>
+        <p class="eyebrow">Goal</p>
+        <h1>Create new goal</h1>
+    </div>
+</section>
+
+<section class="form-panel">
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <div class="actions">
+            <button type="submit">Save</button>
+            <a class="button secondary" href="{% url 'goal_list' %}">Cancel</a>
+        </div>
+    </form>
+</section>
 {% endblock %}

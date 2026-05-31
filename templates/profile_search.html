@@ -1,14 +1,27 @@
 {% extends 'base.html' %}
+
+{% block title %}DevLog - Search Profile{% endblock %}
+
 {% block content %}
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
+<section class="page-head">
+    <div>
+        <p class="eyebrow">Public profiles</p>
+        <h1>Search developer progress</h1>
+        <p class="muted">Find a public DevLog profile by username.</p>
+    </div>
+</section>
 
-    <button type="submit">Submit</button>
-</form>
+<section class="form-panel">
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <div class="actions">
+            <button type="submit">Search</button>
+        </div>
+    </form>
 
-{% if error %}
-    <p>{{ error }}</p>
-{% endif %}
-<a href="{% url 'home' %}">Back home</a>
+    {% if error %}
+        <p class="empty" style="margin-top: 1rem;">{{ error }}</p>
+    {% endif %}
+</section>
 {% endblock %}

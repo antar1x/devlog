@@ -1,43 +1,67 @@
 {% extends 'base.html' %}
+
+{% block title %}DevLog - My Profile{% endblock %}
+
 {% block content %}
-<h1>{{ profile.user.username }}</h1>
-{% if profile.avatar %}
-    <img src="{{ profile.avatar.url }}" alt="{{ profile.user.username }} avatar" width="120">
-{% endif %}
-<p>{{ profile.bio }}</p>
-    {% if profile.is_public %}
-        <p>Your profile is Public!</p>
-    {% else %}
-        <p>Your profile is private</p>
+<section class="page-head">
+    <div>
+        <p class="eyebrow">My profile</p>
+        <h1>{{ profile.user.username }}</h1>
+        <p class="muted">{{ profile.bio|default:"No bio yet." }}</p>
+    </div>
+    {% if profile.avatar %}
+        <img class="profile-avatar" src="{{ profile.avatar.url }}" alt="{{ profile.user.username }} avatar">
     {% endif %}
+</section>
 
-<h3>Total topics: {{ total_topics }}</h3>
-<h3>Total minutes: {{ total_minutes }}</h3>
-<h3>Total hours: {{ total_hours }}</h3>
+<section class="grid grid-3">
+    <article class="stat-card">
+        <span class="stat-label">Topics</span>
+        <span class="stat-value">{{ total_topics }}</span>
+    </article>
+    <article class="stat-card">
+        <span class="stat-label">Minutes</span>
+        <span class="stat-value">{{ total_minutes }}</span>
+    </article>
+    <article class="stat-card">
+        <span class="stat-label">Hours</span>
+        <span class="stat-value">{{ total_hours|floatformat:1 }}</span>
+    </article>
+</section>
 
-<h3>Recent sessions</h3>
-<ul>
-    {% for session in last_5_sessions %}
-        <li>
-            {{ session.date }} -
-            {{ session.topic.name }} -
-            {{ session.duration_minutes }} min
-        </li>
-    {% empty %}
-        <li>No sessions yet.</li>
-    {% endfor %}
-</ul>
+<section class="grid grid-2" style="margin-top: 1rem;">
+    <div class="panel">
+        <h2>Recent sessions</h2>
+        <ul class="list">
+            {% for session in last_5_sessions %}
+                <li class="item-card">
+                    <strong>{{ session.topic.name }}</strong>
+                    <div class="meta">
+                        <span>{{ session.date }}</span>
+                        <span>{{ session.duration_minutes }} min</span>
+                    </div>
+                </li>
+            {% empty %}
+                <li class="empty">No sessions yet.</li>
+            {% endfor %}
+        </ul>
+    </div>
 
-<h3>Goals</h3>
-<ul>
-    {% for goal in goals %}
-        <li>
-            {{ goal.title }} -
-            {{ goal.topic.name }} -
-            {{ goal.target_hours }} hours
-        </li>
-    {% empty %}
-        <li>No goals yet.</li>
-    {% endfor %}
-</ul>
+    <div class="panel">
+        <h2>Goals</h2>
+        <ul class="list">
+            {% for goal in goals %}
+                <li class="item-card">
+                    <strong>{{ goal.title }}</strong>
+                    <div class="meta">
+                        <span>{{ goal.topic.name }}</span>
+                        <span>{{ goal.target_hours }} hours</span>
+                    </div>
+                </li>
+            {% empty %}
+                <li class="empty">No goals yet.</li>
+            {% endfor %}
+        </ul>
+    </div>
+</section>
 {% endblock %}

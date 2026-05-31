@@ -1,33 +1,38 @@
 {% extends 'base.html' %}
+
+{% block title %}DevLog - Sessions{% endblock %}
+
 {% block content %}
-<h1>My study sessions</h1>
+<section class="page-head">
+    <div>
+        <p class="eyebrow">Study log</p>
+        <h1>My sessions</h1>
+        <p class="muted">Every entry is a small piece of evidence that you kept going.</p>
+    </div>
+    <a class="button" href="{% url 'session_create' %}">Add session</a>
+</section>
 
-<p>
-    <a href="{% url 'session_create' %}">Add session</a>
-</p>
-
-<ul>
+<ul class="list">
     {% for session in sessions %}
-        <li>
-            {{ session.date }} -
-            {{ session.topic.name }} -
-            {{ session.duration_minutes }} min -
-            difficulty {{ session.difficulty }}/5
+        <li class="item-card">
+            <strong>{{ session.topic.name }}</strong>
+            <div class="meta">
+                <span>{{ session.date }}</span>
+                <span>{{ session.duration_minutes }} min</span>
+                <span>Difficulty {{ session.difficulty }}/5</span>
+            </div>
 
             {% if session.notes %}
-                <br>
-                {{ session.notes }}
+                <p class="muted" style="margin-top: .7rem;">{{ session.notes }}</p>
             {% endif %}
-            <br>
-                <a href="{% url 'session_edit' session.pk %}">Edit</a>
-                <a href="{% url 'session_delete' session.pk %}">Delete</a>
+
+            <div class="actions">
+                <a class="button secondary" href="{% url 'session_edit' session.pk %}">Edit</a>
+                <a class="button secondary" href="{% url 'session_delete' session.pk %}">Delete</a>
+            </div>
         </li>
     {% empty %}
-        <li>No sessions yet.</li>
+        <li class="empty">No sessions yet.</li>
     {% endfor %}
 </ul>
-
-<p>
-    <a href="{% url 'home' %}">Back home</a>
-</p>
 {% endblock %}

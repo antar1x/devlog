@@ -1,24 +1,50 @@
 {% extends 'base.html' %}
-{% block content %}
-    <h1>Goal list</h1>
-    {% for goal in goals %}
-        <h4>Topic: {{ goal.topic }}</h4>
-        <h4>Deadline: {{ goal.deadline }}</h4>
-        <p>Progress: {{ goal.current_minutes }} / {{ goal.target_minutes }} minutes</p>
-<p>{{ goal.progress_percent }}%</p>
 
-{% if goal.is_completed_now %}
-    <strong>Completed</strong>
-{% else %}
-    <strong>In progress</strong>
-{% endif %}
-        <h4>Your target hours: {{ goal.target_hours }}</h4>
-        <h4>Title: {{ goal.title }}</h4>
-        <a href="{% url 'goal_edit' goal.pk %}">Edit goal</a>
-        <a href="{% url 'goal_delete' goal.pk %}">Delete goal</a>
+{% block title %}DevLog - Goals{% endblock %}
+
+{% block content %}
+<section class="page-head">
+    <div>
+        <p class="eyebrow">Goals</p>
+        <h1>Learning targets</h1>
+        <p class="muted">Turn vague progress into measured milestones.</p>
+    </div>
+    <a class="button" href="{% url 'goal_create' %}">Create goal</a>
+</section>
+
+<ul class="list">
+    {% for goal in goals %}
+        <li class="item-card">
+            <div class="page-head" style="margin-bottom: .7rem;">
+                <div>
+                    <strong>{{ goal.title }}</strong>
+                    <div class="meta">
+                        <span>{{ goal.topic }}</span>
+                        <span>Deadline {{ goal.deadline }}</span>
+                        <span>{{ goal.target_hours }} target hours</span>
+                    </div>
+                </div>
+                {% if goal.is_completed_now %}
+                    <span class="pill good">Completed</span>
+                {% else %}
+                    <span class="pill warn">In progress</span>
+                {% endif %}
+            </div>
+
+            <div class="progress" aria-label="Goal progress">
+                <span style="width: {{ goal.progress_percent }}%;"></span>
+            </div>
+            <p class="muted" style="margin-top: .55rem;">
+                {{ goal.current_minutes }} / {{ goal.target_minutes }} minutes · {{ goal.progress_percent }}%
+            </p>
+
+            <div class="actions">
+                <a class="button secondary" href="{% url 'goal_edit' goal.pk %}">Edit</a>
+                <a class="button secondary" href="{% url 'goal_delete' goal.pk %}">Delete</a>
+            </div>
+        </li>
     {% empty %}
-        <h3>No goals yet</h3>
+        <li class="empty">No goals yet.</li>
     {% endfor %}
-    <a href="{% url 'goal_create' %}">Create goal</a>
-<a href="{% url 'home' %}">Back home</a>
+</ul>
 {% endblock %}

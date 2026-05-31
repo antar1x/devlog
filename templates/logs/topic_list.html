@@ -1,20 +1,24 @@
 {% extends 'base.html' %}
+
+{% block title %}DevLog - Topics{% endblock %}
+
 {% block content %}
-    <h1>My topics</h1>
+<section class="page-head">
+    <div>
+        <p class="eyebrow">Topics</p>
+        <h1>My topics</h1>
+        <p class="muted">Group your learning into clear tracks.</p>
+    </div>
+    <a class="button" href="{% url 'topic_create' %}">Add topic</a>
+</section>
 
-    <p>
-        <a href="{% url 'topic_create' %}">Add new topic</a>
-    </p>
-
-    <ul>
-        {% for topic in topics %}
-            <li>{{ topic.name }}</li>
-        {% empty %}
-            <li>No topics yet.</li>
-        {% endfor %}
-    </ul>
-
-    <p>
-        <a href="{% url 'home' %}">Back home</a>
-    </p>
+<ul class="list">
+    {% for topic in topics %}
+        <li class="item-card">
+            <strong>{{ topic.name }}</strong>
+        </li>
+    {% empty %}
+        <li class="empty">No topics yet.</li>
+    {% endfor %}
+</ul>
 {% endblock %}

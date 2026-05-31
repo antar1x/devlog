@@ -1,4 +1,40 @@
 {% extends 'base.html' %}
+
+{% block title %}DevLog - Home{% endblock %}
+
 {% block content %}
-    <h4>About us</h4>
+<section class="page-head">
+    <div>
+        <p class="eyebrow">Developer progress tracker</p>
+        <h1>Track the work behind your growth.</h1>
+        <p class="muted">Log study sessions, follow goals, and turn your learning history into a public profile.</p>
+    </div>
+    <div class="actions">
+        {% if user.is_authenticated %}
+            <a class="button" href="{% url 'session_create' %}">Add session</a>
+            <a class="button secondary" href="{% url 'public_profile' user.username %}">Public profile</a>
+        {% else %}
+            <a class="button" href="{% url 'register' %}">Create account</a>
+            <a class="button secondary" href="{% url 'login' %}">Login</a>
+        {% endif %}
+    </div>
+</section>
+
+<section class="grid grid-3">
+    <article class="stat-card">
+        <span class="stat-label">Log sessions</span>
+        <span class="stat-value">01</span>
+        <p class="muted">Record what you learned, how long it took, and how hard it felt.</p>
+    </article>
+    <article class="stat-card">
+        <span class="stat-label">Measure progress</span>
+        <span class="stat-value">02</span>
+        <p class="muted">See totals, recent work, topic breakdowns, and goal completion.</p>
+    </article>
+    <article class="stat-card">
+        <span class="stat-label">Share proof</span>
+        <span class="stat-value">03</span>
+        <p class="muted">Use a public profile as a compact portfolio signal.</p>
+    </article>
+</section>
 {% endblock %}

@@ -1,18 +1,23 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-<form method="post">
-    {% csrf_token %}
+{% extends 'base.html' %}
 
-    {{ form.as_p }}
+{% block title %}DevLog - Login{% endblock %}
 
-    <button type="submit">
-       Login
-    </button>
+{% block content %}
+<section class="page-head">
+    <div>
+        <p class="eyebrow">Welcome back</p>
+        <h1>Login</h1>
+    </div>
+</section>
+
+<section class="form-panel">
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <div class="actions">
+            <button type="submit">Login</button>
+            <a class="button secondary" href="{% url 'register' %}">Register</a>
+        </div>
     </form>
-</body>
-</html>
+</section>
+{% endblock %}

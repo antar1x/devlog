@@ -1,19 +1,68 @@
 {% extends 'base.html' %}
+
+{% block title %}DevLog - Dashboard{% endblock %}
+
 {% block content %}
-    <h1>Your statistic:</h1>
-    <h3>Total sessions: {{ total_sessions }}</h3>
-    <h3>Total minutes: {{ total_minutes }}</h3>
-    <h3>Total hours: {{ total_hours }}</h3>
-    <h3>Total topics: {{ total_topics }}</h3>
-    <h3>Last 5 sessions:</h3>
-    {% for session in last_5_sessions %}
-    {{ session.topic }} - {{ session.date }}
-    {% empty %}
-        <h4>No sessions yet</h4>
-    {% endfor %}
-    <h3>Minutes by topic</h3>
-    {% for stat in statistic %}
-    {{ stat.topic__name }} - {{ stat.total_minutes }}<br>
-    {% endfor %}
-<a href="{% url 'home' %}">Back home</a>
+<section class="page-head">
+    <div>
+        <p class="eyebrow">Dashboard</p>
+        <h1>Your statistics</h1>
+        <p class="muted">A quick scan of your learning activity and momentum.</p>
+    </div>
+    <div class="actions">
+        <a class="button" href="{% url 'session_create' %}">Add session</a>
+        <a class="button secondary" href="{% url 'goal_create' %}">New goal</a>
+    </div>
+</section>
+
+<section class="grid grid-3">
+    <article class="stat-card">
+        <span class="stat-label">Total sessions</span>
+        <span class="stat-value">{{ total_sessions }}</span>
+    </article>
+    <article class="stat-card">
+        <span class="stat-label">Total minutes</span>
+        <span class="stat-value">{{ total_minutes }}</span>
+    </article>
+    <article class="stat-card">
+        <span class="stat-label">Total hours</span>
+        <span class="stat-value">{{ total_hours|floatformat:1 }}</span>
+    </article>
+</section>
+
+<section class="grid grid-2" style="margin-top: 1rem;">
+    <div class="panel">
+        <h2>Recent sessions</h2>
+        <ul class="list">
+            {% for session in last_5_sessions %}
+                <li class="item-card">
+                    <strong>{{ session.topic }}</strong>
+                    <div class="meta">
+                        <span>{{ session.date }}</span>
+                        <span>{{ session.duration_minutes }} min</span>
+                        <span>Difficulty {{ session.difficulty }}/5</span>
+                    </div>
+                </li>
+            {% empty %}
+                <li class="empty">No sessions yet.</li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <div class="panel">
+        <h2>Minutes by topic</h2>
+        <ul class="list">
+            {% for stat in statistic %}
+                <li class="item-card">
+                    <strong>{{ stat.topic__name }}</strong>
+                    <div class="meta">
+                        <span>{{ stat.total_minutes }} minutes</span>
+                    </div>
+                </li>
+            {% empty %}
+                <li class="empty">No topic statistics yet.</li>
+            {% endfor %}
+        </ul>
+    </div>
+</section>
 {% endblock %}
