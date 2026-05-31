@@ -1,14 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-    <a href="{% url 'topic_list' %}">Topic list</a>
-    <a href="{% url 'session_list' %}">Session list</a>
-<a href="{% url 'dashboard' %}">Dashboard</a>
-<a href="{% url 'goal_list' %}">Goal list</a>
-<a href="{% url 'profiles' %}">Search profile</a>
-</body>
-</html>
+{% extends 'base.html' %}
+{% block content %}
+    <h4>About us</h4>
+{% endblock %}

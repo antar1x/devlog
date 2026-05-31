@@ -1,3 +1,5 @@
+{% extends 'base.html' %}
+{% block content %}
 <h1>Add study session</h1>
 
 <form method="post">
@@ -11,3 +13,4 @@
     <a href="{% url 'session_list' %}">Back to sessions</a>
     <a href="{% url 'home' %}">Back home</a>
 </p>
+{% endblock %}

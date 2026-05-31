@@ -5,6 +5,14 @@
     <title>Title</title>
 </head>
 <body>
-
+    <a href="{% url 'topic_list' %}">Topic list</a>
+    <a href="{% url 'session_list' %}">Session list</a>
+    <a href="{% url 'dashboard' %}">Dashboard</a>
+    <a href="{% url 'goal_list' %}">Goal list</a>
+    <a href="{% url 'profiles' %}">Search profile</a>
+    <a href="{% url 'profile_settings' %}">Settings</a>
+    <a href="{% url 'profile_info' %}">My profile</a>
+    {% block content %}
+    {% endblock %}
 </body>
 </html>

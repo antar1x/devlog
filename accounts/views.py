@@ -1,14 +1,17 @@
 from django.contrib.auth import login
 from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
 from django.contrib.auth.views import LoginView
 from django.db.models import Sum
 from django.http import Http404
 from django.shortcuts import render, redirect, get_object_or_404
+from django.urls import reverse_lazy
 from django.views import View
-from django.views.generic import CreateView, TemplateView
+from django.views.generic import CreateView, TemplateView, UpdateView
 
-from accounts.forms import RegisterForm, SearchForm
+from accounts.forms import RegisterForm, SearchForm, ProfileUpdateForm
+from accounts.models import Profile
 from logs.models import LogSession, Topic, Goal
 
 
@@ -133,3 +136,42 @@ class PublicProfileView(View):
             'last_5_sessions': last_5_sessions,
             'goals': goals,
         })
+
+class MyProfileView(LoginRequiredMixin, UpdateView):
+    model = Profile
+    form_class = ProfileUpdateForm
+    template_name = 'account/profile_settings.html'
+    success_url =  reverse_lazy('home')
+
+    def get_object(self, queryset=None):
+        return self.request.user.profile
+
+
+class MyProfileInfoView(LoginRequiredMixin, TemplateView):
+    def get(self, request):
+        sessions = LogSession.objects.filter(user=request.user)
+
+        total_minutes = sessions.aggregate(
+            total=Sum('duration_minutes')
+        )['total'] or 0
+
+        total_hours = total_minutes / 60
+
+        total_topics = Topic.objects.filter(user=request.user).count()
+
+        last_5_sessions = sessions.select_related('topic').order_by('-date')[:5]
+
+        goals = Goal.objects.filter(user=request.user).select_related('topic')
+        return render(
+            request,
+            "account/profile.html",
+            {
+                "profile": request.user.profile,
+                "total_minutes": total_minutes,
+                "total_hours": total_hours,
+                "total_topics": total_topics,
+                "last_5_sessions": last_5_sessions,
+                "goals": goals,
+            }
+        )
+

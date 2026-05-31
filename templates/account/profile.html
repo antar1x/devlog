@@ -1,10 +1,15 @@
 {% extends 'base.html' %}
 {% block content %}
-    <h1>{{ profile.user.username }}</h1>
+<h1>{{ profile.user.username }}</h1>
 {% if profile.avatar %}
     <img src="{{ profile.avatar.url }}" alt="{{ profile.user.username }} avatar" width="120">
 {% endif %}
 <p>{{ profile.bio }}</p>
+    {% if profile.is_public %}
+        <p>Your profile is Public!</p>
+    {% else %}
+        <p>Your profile is private</p>
+    {% endif %}
 
 <h3>Total topics: {{ total_topics }}</h3>
 <h3>Total minutes: {{ total_minutes }}</h3>
@@ -34,6 +39,5 @@
     {% empty %}
         <li>No goals yet.</li>
     {% endfor %}
-<a href="{% url 'home' %}">Back home</a>
 </ul>
 {% endblock %}

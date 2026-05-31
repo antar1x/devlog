@@ -1,10 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'base.html' %}
+{% block content %}
     <h1>Your statistic:</h1>
     <h3>Total sessions: {{ total_sessions }}</h3>
     <h3>Total minutes: {{ total_minutes }}</h3>
@@ -21,5 +16,4 @@
     {{ stat.topic__name }} - {{ stat.total_minutes }}<br>
     {% endfor %}
 <a href="{% url 'home' %}">Back home</a>
-</body>
-</html>
+{% endblock %}
