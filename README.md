@@ -76,3 +76,6 @@ Users can create topics, log study sessions, set learning goals, and view progre
 - Django
 - SQLite
 - HTML / CSS
+
+
+Deployment Link: https://devlog-hm64.onrender.com
