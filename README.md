@@ -1,63 +1,11 @@
-## Database Schema
-
-```mermaid
-erDiagram
-    USER ||--|| PROFILE : has
-    USER ||--o{ TOPIC : owns
-    USER ||--o{ LOG_SESSION : writes
-    USER ||--o{ GOAL : sets
-
-    TOPIC ||--o{ LOG_SESSION : used_in
-    TOPIC ||--o{ GOAL : targets
-
-    USER {
-        int id PK
-        string username
-        string email
-        string password
-    }
-
-    PROFILE {
-        int id PK
-        int user_id FK
-        text bio
-        bool is_public
-        string avatar
-    }
-
-    TOPIC {
-        int id PK
-        int user_id FK
-        string name
-    }
-
-    LOG_SESSION {
-        int id PK
-        int user_id FK
-        int topic_id FK
-        date date
-        int duration_minutes
-        text notes
-        int difficulty
-    }
-
-    GOAL {
-        int id PK
-        int user_id FK
-        int topic_id FK
-        string title
-        int target_hours
-        date deadline
-        bool is_completed
-    }
-```
-
-
 # DevLog
 
 DevLog is a Django web application for tracking developer learning progress.
 
-Users can create topics, log study sessions, set learning goals, and view progress statistics on a dashboard. The app also includes public developer profiles, so users can share their learning activity, goals, and recent sessions as a portfolio signal.
+Users can create topics, log study sessions, set learning goals, and view
+progress statistics on a dashboard. The app also includes public developer
+profiles, so users can share their learning activity, goals, and recent sessions
+as a portfolio signal.
 
 ## Features
 
@@ -74,8 +22,11 @@ Users can create topics, log study sessions, set learning goals, and view progre
 
 - Python
 - Django
-- SQLite
+- SQLite for local development
+- PostgreSQL for production
 - HTML / CSS
+- WhiteNoise for static files
+- Render for deployment
 
 ## Local Setup
 
@@ -162,3 +113,57 @@ Render settings:
 The `build.sh` script installs dependencies, collects static files, and runs
 database migrations. The `render.yaml` file can also be used to deploy the app
 as a Render Blueprint.
+
+## Database Schema
+
+```mermaid
+erDiagram
+    USER ||--|| PROFILE : has
+    USER ||--o{ TOPIC : owns
+    USER ||--o{ LOG_SESSION : writes
+    USER ||--o{ GOAL : sets
+
+    TOPIC ||--o{ LOG_SESSION : used_in
+    TOPIC ||--o{ GOAL : targets
+
+    USER {
+        int id PK
+        string username
+        string email
+        string password
+    }
+
+    PROFILE {
+        int id PK
+        int user_id FK
+        text bio
+        bool is_public
+        string avatar
+    }
+
+    TOPIC {
+        int id PK
+        int user_id FK
+        string name
+    }
+
+    LOG_SESSION {
+        int id PK
+        int user_id FK
+        int topic_id FK
+        date date
+        int duration_minutes
+        text notes
+        int difficulty
+    }
+
+    GOAL {
+        int id PK
+        int user_id FK
+        int topic_id FK
+        string title
+        int target_hours
+        date deadline
+        bool is_completed
+    }
+```
