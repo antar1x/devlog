@@ -1,0 +1,10 @@
+[flake8]
+exclude =
+    .git,
+    .venv,
+    .codex-check-venv,
+    __pycache__,
+    */migrations/*,
+    staticfiles,
+    media
+max-line-length = 88

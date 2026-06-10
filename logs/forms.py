@@ -6,7 +6,8 @@ from logs.models import Topic, LogSession, Goal
 class TopicForm(forms.ModelForm):
     class Meta:
         model = Topic
-        fields = ('name', )
+        fields = ('name',)
+
 
 class LogSessionForm(forms.ModelForm):
     class Meta:
@@ -17,10 +18,11 @@ class LogSessionForm(forms.ModelForm):
             'notes': forms.Textarea(attrs={'rows': 4}),
         }
 
+
 class GoalForm(forms.ModelForm):
     class Meta:
         model = Goal
-        fields = ('title', 'target_hours', 'topic', 'deadline' )
+        fields = ('title', 'target_hours', 'topic', 'deadline')
         widgets = {
             'deadline': forms.DateInput(attrs={'type': 'date'}),
         }

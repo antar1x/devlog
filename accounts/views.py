@@ -31,7 +31,6 @@ class CustomLoginView(LoginView):
 
 
 class UserRegistrationView(CreateView):
-
     def get(self, request):
         form = RegisterForm()
         return render(request, 'account/register.html', {'form': form})
@@ -39,22 +38,22 @@ class UserRegistrationView(CreateView):
     def post(self, request):
         form = RegisterForm(request.POST)
         if form.is_valid():
-            form.save()
+            user = form.save()
+            login(request, user)
+            return redirect('home')
 
-            return redirect('login')
-        else:
-            return render(request, 'account/register.html', {'form': form})
+        return render(request, 'account/register.html', {'form': form})
 
 
 class HomeView(TemplateView):
     def get(self, request):
         return render(request, 'home.html')
 
-class ProfileView(View):
 
+class ProfileView(View):
     def get(self, request):
         form = SearchForm()
-        return render (request, 'profile_search.html', {'form': form})
+        return render(request, 'profile_search.html', {'form': form})
 
     def post(self, request):
         form = SearchForm(request.POST)
@@ -73,7 +72,9 @@ class ProfileView(View):
 
                     total_topics = Topic.objects.filter(user=user).count()
 
-                    last_5_sessions = sessions.select_related('topic').order_by('-date')[:5]
+                    last_5_sessions = sessions.select_related(
+                        'topic'
+                    ).order_by('-date')[:5]
 
                     goals = Goal.objects.filter(user=user).select_related('topic')
                     return render(
@@ -97,15 +98,21 @@ class ProfileView(View):
                     }
                 )
             except User.DoesNotExist:
-
-                return render(request, "profile_search.html", {"form": form,
-                                                     "error": "User not found"})
+                return render(
+                    request,
+                    "profile_search.html",
+                    {
+                        "form": form,
+                        "error": "User not found",
+                    }
+                )
 
         return render(
             request,
             "profile_search.html",
             {"form": form}
         )
+
 
 class PublicProfileView(View):
     def get(self, request, username):
@@ -124,7 +131,9 @@ class PublicProfileView(View):
 
         total_topics = Topic.objects.filter(user=user).count()
 
-        last_5_sessions = sessions.select_related('topic').order_by('-date')[:5]
+        last_5_sessions = sessions.select_related(
+            'topic'
+        ).order_by('-date')[:5]
 
         goals = Goal.objects.filter(user=user).select_related('topic')
 
@@ -137,11 +146,12 @@ class PublicProfileView(View):
             'goals': goals,
         })
 
+
 class MyProfileView(LoginRequiredMixin, UpdateView):
     model = Profile
     form_class = ProfileUpdateForm
     template_name = 'account/profile_settings.html'
-    success_url =  reverse_lazy('home')
+    success_url = reverse_lazy('home')
 
     def get_object(self, queryset=None):
         return self.request.user.profile
@@ -159,7 +169,9 @@ class MyProfileInfoView(LoginRequiredMixin, TemplateView):
 
         total_topics = Topic.objects.filter(user=request.user).count()
 
-        last_5_sessions = sessions.select_related('topic').order_by('-date')[:5]
+        last_5_sessions = sessions.select_related(
+            'topic'
+        ).order_by('-date')[:5]
 
         goals = Goal.objects.filter(user=request.user).select_related('topic')
         return render(
@@ -174,4 +186,3 @@ class MyProfileInfoView(LoginRequiredMixin, TemplateView):
                 "goals": goals,
             }
         )
-

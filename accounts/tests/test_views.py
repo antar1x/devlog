@@ -63,7 +63,9 @@ class AccountViewTests(TestCase):
         self.user.profile.is_public = True
         self.user.profile.save()
 
-        response = self.client.get(reverse('public_profile', args=[self.user.username]))
+        response = self.client.get(
+            reverse('public_profile', args=[self.user.username])
+        )
 
         self.assertEqual(response.status_code, 200)
 
@@ -71,7 +73,9 @@ class AccountViewTests(TestCase):
         self.user.profile.is_public = False
         self.user.profile.save()
 
-        response = self.client.get(reverse('public_profile', args=[self.user.username]))
+        response = self.client.get(
+            reverse('public_profile', args=[self.user.username])
+        )
 
         self.assertEqual(response.status_code, 404)
 
@@ -104,7 +108,9 @@ class AccountViewTests(TestCase):
             deadline='2026-06-30',
         )
 
-        response = self.client.get(reverse('public_profile', args=[self.user.username]))
+        response = self.client.get(
+            reverse('public_profile', args=[self.user.username])
+        )
 
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, 'Django')
